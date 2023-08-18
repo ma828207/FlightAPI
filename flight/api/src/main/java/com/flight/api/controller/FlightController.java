@@ -1,24 +1,24 @@
 package com.flight.api.controller;
 
 import com.flight.api.exception.NoContentException;
+import com.flight.api.exception.NoResultFoundException;
+import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.service.FlightService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
- * This class creates the endpoint for the flight resource to get flight list.
+ * Controller class to create flight operation endpoints for Flight resource.
  */
 @RestController
 public class FlightController {
@@ -42,13 +42,11 @@ public class FlightController {
             @RequestParam(value = "dest") String dest,
             @RequestParam(value = "sortBy", defaultValue = "price", required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir
-    ) throws NoContentException {
+    ) throws NoContentException, NoResultFoundException, SortInputDataException {
 
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
-
-        List<FlightDTO> flights = flightService.getAllFlights(src, dest, sort);
+        /* SortBy and Sort direction are set in Sort object passed as parameter */
+        List<FlightDTO> flights = flightService.getFlights(src, dest, sortBy, sortDir);
         logger.debug("Response returned {}", flights);
-
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.time.LocalTime;
 
 /**
  * Entity Class for Flight
@@ -25,9 +25,9 @@ public class Flight {
     @Column(name = "DESTINATION")
     private String destination;
     @Column(name = "DEPART_TIME")
-    private Time departTime;
+    private LocalTime departTime;
     @Column(name = "ARRIVAL_TIME")
-    private Time arrivalTime;
+    private LocalTime arrivalTime;
     @Column(name = "PRICE")
     private BigDecimal price;
 

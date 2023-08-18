@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class ExceptionResponse {
     private String errorCode;
     private String errorMessage;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yy hh:mm:ss")
     private LocalDateTime timestamp;
 }

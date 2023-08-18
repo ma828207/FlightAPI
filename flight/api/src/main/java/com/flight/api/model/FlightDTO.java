@@ -3,7 +3,7 @@ package com.flight.api.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.time.LocalTime;
 
 /**
  * DTO class for Flight API
@@ -13,9 +13,10 @@ public class FlightDTO {
     private String flNo;
     private String origin;
     private String destination;
-    private Time departTime;
-    private Time arrivalTime;
+    private LocalTime departTime;
+    private LocalTime arrivalTime;
     private BigDecimal price;
+    private Long durationInMins;
 }
 
 

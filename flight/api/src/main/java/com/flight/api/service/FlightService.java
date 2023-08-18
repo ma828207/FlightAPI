@@ -1,8 +1,9 @@
 package com.flight.api.service;
 
 import com.flight.api.exception.NoContentException;
+import com.flight.api.exception.NoResultFoundException;
+import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  * Service contract for all flights operations.
  */
 public interface FlightService {
-   List<FlightDTO>  getAllFlights(String source, String destination, Sort sort) throws NoContentException;
+   List<FlightDTO>  getFlights(String source, String destination, String sortBy,String sortDir) throws NoContentException, SortInputDataException, NoResultFoundException;
 }
