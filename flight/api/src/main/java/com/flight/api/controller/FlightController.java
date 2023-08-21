@@ -42,12 +42,14 @@ public class FlightController {
             @RequestParam(value = "dest") String dest,
             @RequestParam(value = "sortBy", defaultValue = "price", required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir
-    ) throws NoContentException, NoResultFoundException, SortInputDataException {
+    ) throws NoResultFoundException, SortInputDataException {
 
         /* SortBy and Sort direction are set in Sort object passed as parameter */
         List<FlightDTO> flights = flightService.getFlights(src, dest, sortBy, sortDir);
         logger.debug("Response returned {}", flights);
         return new ResponseEntity<>(flights, HttpStatus.OK);
+
     }
+
 }
 

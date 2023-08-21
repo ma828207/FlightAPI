@@ -22,10 +22,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NoContentException.class)
     public ResponseEntity<ExceptionResponse> handleNoContentException(NoContentException noContentException) {
         ExceptionResponse response = new ExceptionResponse();
-        response.setErrorCode(HttpStatus.NOT_FOUND.toString());
+        response.setErrorCode(HttpStatus.BAD_REQUEST.toString());
         response.setErrorMessage(noContentException.getMessage());
         response.setTimestamp(LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     /**
