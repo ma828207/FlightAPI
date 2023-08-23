@@ -7,7 +7,7 @@ import com.flight.api.exception.NoResultFoundException;
 import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.util.Utility;
-import com.flight.api.validation.ValidateData;
+import com.flight.api.validation.InputValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     MessageSource messageSource;
     @Autowired
-    ValidateData validateData;
+    InputValidator validateData;
 
     /**
      * This method returns list of flights with different input parameters.
@@ -46,15 +46,15 @@ public class FlightServiceImpl implements FlightService {
             throws SortInputDataException, NoResultFoundException {
         List<FlightDTO> flightDTOList;
 
-        validateData.validateSortFields(sortBy, sortDir);
+        Boolean validationStatus;
+        validationStatus = validateData.validateSortFields(sortBy, sortDir);
 
         List<Flight> flightLists = null;
-
-        flightLists = flightRepository.findByOriginAndDestination(source, destination);
-        logger.debug("Response returned {}", flightLists);
-
-
-        if (!flightLists.isEmpty()) {
+        if (Boolean.TRUE.equals(validationStatus)) {
+            flightLists = flightRepository.findByOriginAndDestination(source, destination);
+            logger.debug("Response returned {}", flightLists);
+        }
+        if (flightLists != null && !flightLists.isEmpty()) {
             flightDTOList = flightLists.stream().map(Utility::mapToDTO).collect(Collectors.toList());
             flightDTOList = Utility.getSortedFlightDetails(flightDTOList, sortBy, sortDir);
             return flightDTOList;

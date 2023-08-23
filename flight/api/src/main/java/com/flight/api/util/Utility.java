@@ -21,7 +21,7 @@ public final class Utility {
     }
 
     /*
-    This method return the sorted Flight list
+    This utility method return the sorted Flight list based on sort parameters.
      */
     public static List<FlightDTO> getSortedFlightDetails(List<FlightDTO> flightDTOList, String sortBy, String sortDir) {
 
@@ -37,24 +37,35 @@ public final class Utility {
         return flightDTOList;
     }
 
-
-    public static List<FlightDTO> getFlightDTOUtilDataList() {
+    /**
+     * This utility method returns data list of type FlightDTO
+     * @return Flight DTO data List
+     */
+    public static List<FlightDTO> getFlightDTOList() {
         List<FlightDTO> flightList = new ArrayList<>();
         FlightDTO flightDTO;
-        flightDTO = getFlightDTOUtilData();
+        flightDTO = getFlightDTOData();
         flightList.add(flightDTO);
         return flightList;
     }
 
-    public static List<Flight> getFlightUtilDataList() {
+    /**
+     * This utility method returns data list of type Flight
+     * @return Flight data list
+     */
+    public static List<Flight> getFlightList() {
         List<Flight> flightList = new ArrayList<>();
         Flight flight;
-        flight = getFlightUtilData();
+        flight = getFlightData();
         flightList.add(flight);
         return flightList;
     }
 
-    public static FlightDTO getFlightDTOUtilData() {
+    /**
+     * This Utility method sets values to FlightDTO object
+     * @return Flight DTO object having values
+     */
+    public static FlightDTO getFlightDTOData() {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setFlNo("G101");
         flightDTO.setDestination("DEL");
@@ -65,8 +76,13 @@ public final class Utility {
         return flightDTO;
     }
 
-    public static Flight getFlightUtilData() {
+    /**
+     * This Utility method sets values to Flight object
+     * @return Flight object having values
+     */
+    public static Flight getFlightData() {
         Flight flight = new Flight();
+        flight.setID(1);
         flight.setFlNumber("G101");
         flight.setDestination("DEL");
         flight.setOrigin("BOM");
@@ -86,8 +102,10 @@ public final class Utility {
         return Duration.between(flightDTO.getDepartTime(), flightDTO.getArrivalTime()).toMinutes();
     }
 
-    /*
-     * This method Converts the returned Entity Response into DTO.
+    /**
+     * This utility method Converts the returned Entity Response into DTO.
+     * @param flight
+     * @return converted FlightDTO object
      */
     public static FlightDTO mapToDTO(Flight flight) {
         FlightDTO flightDTO = new FlightDTO();
