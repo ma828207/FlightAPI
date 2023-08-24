@@ -4,32 +4,32 @@ import com.flight.api.dao.FlightRepository;
 import com.flight.api.entity.Flight;
 import com.flight.api.exception.NoContentException;
 import com.flight.api.exception.NoResultFoundException;
-import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.util.Utility;
 import com.flight.api.validation.InputValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+
 
 /**
  * Service class having business logic to implement different flight operations.
  */
 @Service
+@Slf4j
 public class FlightServiceImpl implements FlightService {
-    Logger logger = LoggerFactory.getLogger(FlightServiceImpl.class);
     @Autowired
-    FlightRepository flightRepository;
+    private FlightRepository flightRepository;
     @Autowired
-    MessageSource messageSource;
+    private MessageSource messageSource;
     @Autowired
-    InputValidator validateData;
+    private InputValidator inputValidator;
 
     /**
      * This method returns list of flights with different input parameters.
@@ -37,29 +37,40 @@ public class FlightServiceImpl implements FlightService {
      * @param source
      * @param destination
      * @param sortBy
-     * @param sortDir
+     * @param sortType
      * @return Flight List of type FlightDTO
      * @throws NoContentException
      */
     @Override
-    public List<FlightDTO> getFlights(String source, String destination, String sortBy, String sortDir)
-            throws SortInputDataException, NoResultFoundException {
-        List<FlightDTO> flightDTOList;
+    public List<FlightDTO> getFlights(String source, String destination, String sortBy, String sortType)
+            throws Exception {
 
+        log.info("Service Class Method named- getFlights Starts with parameters: {}", source, destination, sortBy, sortType);
+
+        List<FlightDTO> flightDTOList ;
+        List<Flight> flightLists = new ArrayList<>();
         Boolean validationStatus;
-        validationStatus = validateData.validateSortFields(sortBy, sortDir);
 
-        List<Flight> flightLists = null;
-        if (Boolean.TRUE.equals(validationStatus)) {
-            flightLists = flightRepository.findByOriginAndDestination(source, destination);
-            logger.debug("Response returned {}", flightLists);
-        }
-        if (flightLists != null && !flightLists.isEmpty()) {
-            flightDTOList = flightLists.stream().map(Utility::mapToDTO).collect(Collectors.toList());
-            flightDTOList = Utility.getSortedFlightDetails(flightDTOList, sortBy, sortDir);
-            return flightDTOList;
-        } else {
-            throw new NoResultFoundException(messageSource.getMessage("api.error.result.data.not.found", null, Locale.ENGLISH));
-        }
+            validationStatus = inputValidator.validateSortFields(sortBy, sortType);
+            log.info("Validation Status in Service Class : {}", validationStatus);
+
+            if (Boolean.TRUE.equals(validationStatus)) {
+                try {
+                    flightLists = flightRepository.findByOriginAndDestination(source, destination);
+                    log.info("Repository Response returned {}", flightLists.size());
+                } catch (Exception exception) {
+                    log.error("Exception Details {}", exception.getMessage());
+                    throw new Exception(exception.getMessage());
+                }
+            }
+            if (flightLists != null && !flightLists.isEmpty()) {
+                flightDTOList = flightLists.stream().map(Utility::mapToDTO).collect(Collectors.toList());
+                flightDTOList = Utility.getSortedFlightDetails(flightDTOList, sortBy, sortType);
+                log.info("Flight DTO list in Service Class after sorting: {}", flightDTOList);
+            } else {
+                throw new NoResultFoundException(messageSource.getMessage("api.error.result.data.not.found", null, Locale.ENGLISH));
+            }
+        log.info("Service Class Method named- getFlights Ends with response: {}", flightDTOList);
+        return flightDTOList;
     }
 }

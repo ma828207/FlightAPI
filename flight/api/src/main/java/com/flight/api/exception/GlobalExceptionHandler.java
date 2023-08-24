@@ -14,21 +14,6 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     /**
-     * This method handles the No Content exception with proper error code and error message.
-     *
-     * @param noContentException
-     * @return object of ResponseEntity having NoContentException details
-     */
-    @ExceptionHandler(value = NoContentException.class)
-    public ResponseEntity<ExceptionResponse> handleNoContentException(NoContentException noContentException) {
-        ExceptionResponse response = new ExceptionResponse();
-        response.setErrorCode(HttpStatus.BAD_REQUEST.toString());
-        response.setErrorMessage(noContentException.getMessage());
-        response.setTimestamp(LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
      * This method handles the sort input exception with proper error code and error message.
      *
      * @param sortInputDataException

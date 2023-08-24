@@ -4,7 +4,7 @@ package com.flight.api.service;
 import com.flight.api.dao.FlightRepository;
 import com.flight.api.entity.Flight;
 import com.flight.api.model.FlightDTO;
-import com.flight.api.util.Utility;
+import com.flight.api.utility.TestUtility;
 import com.flight.api.validation.InputValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,11 +34,12 @@ public class FlightServiceImplTest {
 
     /**
      * This method covers test case for fetching flight list.
+     *
      * @throws Exception
      */
     @Test
     public void testSearchFlightByOriginAndDestination() throws Exception {
-        List<Flight> flightList = Utility.getFlightList();
+        List<Flight> flightList = TestUtility.getFlightList();
 
         when(validator.validateSortFields(any(), any())).thenReturn(true);
         when(flightRepo.findByOriginAndDestination(any(), any())).thenReturn(flightList);

@@ -4,7 +4,7 @@ import com.flight.api.exception.NoResultFoundException;
 import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.service.FlightServiceImpl;
-import com.flight.api.util.Utility;
+import com.flight.api.utility.TestUtility;
 import com.flight.api.validation.InputValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,11 +33,8 @@ public class FlightControllerTest {
 
     @InjectMocks
     private FlightController flightController;
-
     @Mock
     private FlightServiceImpl flightService;
-
-
     @Mock
     InputValidator validator;
 
@@ -49,13 +46,14 @@ public class FlightControllerTest {
 
     /**
      * This method covers positive test case for fetching flight list.
+     *
      * @throws NoResultFoundException
      * @throws SortInputDataException
      */
     @Test
-    public void testFlightController() throws NoResultFoundException, SortInputDataException {
+    public void testFlightController() throws Exception {
 
-        List<FlightDTO> flightDTOList = Utility.getFlightDTOList();
+        List<FlightDTO> flightDTOList = TestUtility.getFlightDTOList();
 
         when(flightService.getFlights("BOM", "DEL", "price", "asc"))
                 .thenReturn(flightDTOList);
@@ -75,12 +73,13 @@ public class FlightControllerTest {
 
     /**
      * This method covers Exception test case
+     *
      * @throws NoResultFoundException
      * @throws SortInputDataException
      */
     @Test
-    public void testFlightControllerWithException() throws NoResultFoundException, SortInputDataException {
-        List<FlightDTO> flightDTOList = Utility.getFlightDTOList();
+    public void testFlightControllerWithException() throws Exception {
+        List<FlightDTO> flightDTOList = TestUtility.getFlightDTOList();
         when(flightService.getFlights("BOM", "DEL", "price", "asc"))
                 .thenThrow(new NoResultFoundException("No Result found"));
         try {

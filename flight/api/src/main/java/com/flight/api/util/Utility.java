@@ -2,11 +2,9 @@ package com.flight.api.util;
 
 import com.flight.api.entity.Flight;
 import com.flight.api.model.FlightDTO;
+import lombok.extern.slf4j.Slf4j;
 
-import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Utility class
  */
+@Slf4j
 public final class Utility {
 
     private Utility() {
@@ -25,6 +24,9 @@ public final class Utility {
      */
     public static List<FlightDTO> getSortedFlightDetails(List<FlightDTO> flightDTOList, String sortBy, String sortDir) {
 
+        log.info("Utility Class Method named - getSortedFlightDetails Starts with parameters: {}",
+                flightDTOList, sortBy, sortDir);
+
         if (sortBy.equalsIgnoreCase("price") && sortDir.equalsIgnoreCase("desc")) {
             flightDTOList = flightDTOList.stream().sorted(Collections.reverseOrder(Comparator.comparing(FlightDTO::getPrice))).collect(Collectors.toList());
         } else if (sortBy.equalsIgnoreCase("price") && sortDir.equalsIgnoreCase("asc")) {
@@ -34,62 +36,8 @@ public final class Utility {
         } else if (sortBy.equalsIgnoreCase("duration") && sortDir.equalsIgnoreCase("desc")) {
             flightDTOList = flightDTOList.stream().sorted(Collections.reverseOrder(Comparator.comparingLong(Utility::getFlightDuration))).collect(Collectors.toList());
         }
+        log.info("Utility Class Method named - getSortedFlightDetails Ends with response: {}", flightDTOList);
         return flightDTOList;
-    }
-
-    /**
-     * This utility method returns data list of type FlightDTO
-     * @return Flight DTO data List
-     */
-    public static List<FlightDTO> getFlightDTOList() {
-        List<FlightDTO> flightList = new ArrayList<>();
-        FlightDTO flightDTO;
-        flightDTO = getFlightDTOData();
-        flightList.add(flightDTO);
-        return flightList;
-    }
-
-    /**
-     * This utility method returns data list of type Flight
-     * @return Flight data list
-     */
-    public static List<Flight> getFlightList() {
-        List<Flight> flightList = new ArrayList<>();
-        Flight flight;
-        flight = getFlightData();
-        flightList.add(flight);
-        return flightList;
-    }
-
-    /**
-     * This Utility method sets values to FlightDTO object
-     * @return Flight DTO object having values
-     */
-    public static FlightDTO getFlightDTOData() {
-        FlightDTO flightDTO = new FlightDTO();
-        flightDTO.setFlNo("G101");
-        flightDTO.setDestination("DEL");
-        flightDTO.setOrigin("BOM");
-        flightDTO.setArrivalTime(LocalTime.parse("19:40:00"));
-        flightDTO.setDepartTime(LocalTime.parse("18:00:00"));
-        flightDTO.setPrice(BigDecimal.valueOf(150.00));
-        return flightDTO;
-    }
-
-    /**
-     * This Utility method sets values to Flight object
-     * @return Flight object having values
-     */
-    public static Flight getFlightData() {
-        Flight flight = new Flight();
-        flight.setID(1);
-        flight.setFlNumber("G101");
-        flight.setDestination("DEL");
-        flight.setOrigin("BOM");
-        flight.setArrivalTime(LocalTime.parse("19:40:00"));
-        flight.setDepartTime(LocalTime.parse("18:00:00"));
-        flight.setPrice(BigDecimal.valueOf(150.00));
-        return flight;
     }
 
     /**
@@ -99,11 +47,15 @@ public final class Utility {
      * @return Flight duration in Minutes
      */
     public static long getFlightDuration(FlightDTO flightDTO) {
-        return Duration.between(flightDTO.getDepartTime(), flightDTO.getArrivalTime()).toMinutes();
+        Long flightDuration;
+        flightDuration = Duration.between(flightDTO.getDepartTime(), flightDTO.getArrivalTime()).toMinutes();
+        log.info("Utility Class getFlightDuration calculated : {}", flightDuration);
+        return flightDuration;
     }
 
     /**
      * This utility method Converts the returned Entity Response into DTO.
+     *
      * @param flight
      * @return converted FlightDTO object
      */
