@@ -2,7 +2,6 @@ package com.flight.api.service;
 
 import com.flight.api.dao.FlightRepository;
 import com.flight.api.entity.Flight;
-import com.flight.api.exception.NoContentException;
 import com.flight.api.exception.NoResultFoundException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.util.Utility;
@@ -39,7 +38,6 @@ public class FlightServiceImpl implements FlightService {
      * @param sortBy
      * @param sortType
      * @return Flight List of type FlightDTO
-     * @throws NoContentException
      */
     @Override
     public List<FlightDTO> getFlights(String source, String destination, String sortBy, String sortType)
