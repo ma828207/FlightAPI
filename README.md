@@ -1,6 +1,7 @@
 Project Description
 
 FLIGHT search.
+
 This api finds flight list based on origin and destination. 
 It has additional feature to sort the result based price and duration or other attributes in ascending/descending order.
 
@@ -9,7 +10,7 @@ This API returns a list of flights based on input parameters to the endpoint /fl
 
 Request parameters to be provided: Required - String flightOrigin 
                                    Required - String flightDestination
-                                Optional - String sortDirection (ASC/DESC)
+                                Optional - String sortType (ASC/DESC)
                                 Optional - String sortBy(price) 
 
 Prerequisite To Run
@@ -34,12 +35,12 @@ Once successfully built, it can be run using Run as Spring boot Application dire
 END POINTS
 To see the data in H2 database: http://localhost:8080/h2/login.jsp , user:sa .Test Connection and Connect.
 
-The service is exposed to : http://localhost:8080/flights/v1
+The service is exposed to : http://localhost:8080/flights
 
 To test the API ,We need to pass the required flightOrigin, flightDestination and optional sortBy field name or optional sortDirection.
 
 Following is a sample URL which can be run on Postman to see the response.
-http://localhost:8080/flights/v1?src=BOM&dest=DEL&sortBy=duration&sortDir=desc
+http://localhost:8080/flights?source=BOM&destination=DEL&sortBy=duration&sortType=asc
 
 Swagger can be used at below url after starting the application:
 http://localhost:8080/swagger-ui/index.html#/flight-controller/getFlights
@@ -47,8 +48,11 @@ http://localhost:8080/swagger-ui/index.html#/flight-controller/getFlights
 Actuator Endpoints for the application Can be seen at below Url:
 http://localhost:8080/actuator/
 
+Flight API is running on Postman using collection request as in below file at given path:
+flight/api/FlightAPI.postman_collection.json
+
 Test Case Implementation
-Test cases for Controller, Service and Repository are in test packages.
+Test cases for Controller and Service class are in the Test package.
 
 License
 None.
