@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "3b77ebaa-95da-4404-bcec-eeb988e2fbae",
+		"name": "FlightAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29378907"
+	},
+	"item": [
+		{
+			"name": "GetFlightsBySourceAndDestination",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "pwd",
+						"username": "manish"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights?source=BOM&destination=DEL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "BOM"
+						},
+						{
+							"key": "destination",
+							"value": "DEL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFlightsByOptionalSortParameters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights?source=BOM&destination=DEL&sortBy=duration&sortType=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "BOM"
+						},
+						{
+							"key": "destination",
+							"value": "DEL"
+						},
+						{
+							"key": "sortBy",
+							"value": "duration"
+						},
+						{
+							"key": "sortType",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SortInputDataException",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights?source=BOM&destination=DEL&sortBy=duration&sortType=asci",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "BOM"
+						},
+						{
+							"key": "destination",
+							"value": "DEL"
+						},
+						{
+							"key": "sortBy",
+							"value": "duration"
+						},
+						{
+							"key": "sortType",
+							"value": "asci"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SpringValidatorException",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights?source=BOM&destination=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "BOM"
+						},
+						{
+							"key": "destination",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NoResultFoundException",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/flights?source=BOM&destination=POM",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"flights"
+					],
+					"query": [
+						{
+							"key": "source",
+							"value": "BOM"
+						},
+						{
+							"key": "destination",
+							"value": "POM"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

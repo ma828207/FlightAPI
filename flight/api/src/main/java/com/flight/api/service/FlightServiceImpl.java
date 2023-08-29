@@ -3,6 +3,7 @@ package com.flight.api.service;
 import com.flight.api.dao.FlightRepository;
 import com.flight.api.entity.Flight;
 import com.flight.api.exception.NoResultFoundException;
+import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.util.Utility;
 import com.flight.api.validation.InputValidator;
@@ -40,8 +41,7 @@ public class FlightServiceImpl implements FlightService {
      * @return Flight List of type FlightDTO
      */
     @Override
-    public List<FlightDTO> getFlights(String source, String destination, String sortBy, String sortType)
-            throws Exception {
+    public List<FlightDTO> getFlights(String source, String destination, String sortBy, String sortType) throws SortInputDataException, NoResultFoundException {
 
         log.info("Service Class Method named- getFlights Starts with parameters: {}", source, destination, sortBy, sortType);
 
@@ -53,13 +53,8 @@ public class FlightServiceImpl implements FlightService {
             log.info("Validation Status in Service Class : {}", validationStatus);
 
             if (Boolean.TRUE.equals(validationStatus)) {
-                try {
                     flightLists = flightRepository.findByOriginAndDestination(source, destination);
                     log.info("Repository Response returned {}", flightLists.size());
-                } catch (Exception exception) {
-                    log.error("Exception Details {}", exception.getMessage());
-                    throw new Exception(exception.getMessage());
-                }
             }
             if (flightLists != null && !flightLists.isEmpty()) {
                 flightDTOList = flightLists.stream().map(Utility::mapToDTO).collect(Collectors.toList());

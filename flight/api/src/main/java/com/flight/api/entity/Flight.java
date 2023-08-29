@@ -13,6 +13,9 @@ import java.time.LocalTime;
 @Table(name = "FLIGHT")
 @Data
 public class Flight {
+
+    private static final long serialVersionUID = 1234567L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Utility class
+ * Utility class for Flight API
  */
 @Slf4j
 public final class Utility {
@@ -19,8 +19,12 @@ public final class Utility {
     private Utility() {
     }
 
-    /*
-    This utility method return the sorted Flight list based on sort parameters.
+    /**
+     * This utility method return the sorted Flight list based on sort parameters.
+     * @param flightDTOList
+     * @param sortBy
+     * @param sortDir
+     * @return sorted flightDTO list.
      */
     public static List<FlightDTO> getSortedFlightDetails(List<FlightDTO> flightDTOList, String sortBy, String sortDir) {
 

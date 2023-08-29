@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ApiApplication {
 
 	/**
-	 * Main method, Entry point of FlightSearch
+	 * Main method, Entry point of FlightSearch API
 	 * */
 	public static void main(String[] args) {
 

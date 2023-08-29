@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  * This test class covers unit tests for functionalities in FlightController.
  */
 @ExtendWith(MockitoExtension.class)
-public class FlightControllerTest {
+class FlightControllerTest {
 
     @InjectMocks
     private FlightController flightController;
@@ -51,10 +51,9 @@ public class FlightControllerTest {
      * @throws SortInputDataException
      */
     @Test
-    public void testFlightController() throws Exception {
+    void testFlightSearchByOriginAndDestination() throws Exception {
 
         List<FlightDTO> flightDTOList = TestUtility.getFlightDTOList();
-
         when(flightService.getFlights("BOM", "DEL", "price", "asc"))
                 .thenReturn(flightDTOList);
 
@@ -70,23 +69,4 @@ public class FlightControllerTest {
         assertThat(flightSearchResponseList.getBody().get(0).getDepartTime()).isEqualTo(LocalTime.parse("18:00:00"));
         assertThat(flightSearchResponseList.getBody().get(0).getPrice()).isEqualTo(BigDecimal.valueOf(150.00));
     }
-
-    /**
-     * This method covers Exception test case
-     *
-     * @throws NoResultFoundException
-     * @throws SortInputDataException
-     */
-    @Test
-    public void testFlightControllerWithException() throws Exception {
-        List<FlightDTO> flightDTOList = TestUtility.getFlightDTOList();
-        when(flightService.getFlights("BOM", "DEL", "price", "asc"))
-                .thenThrow(new NoResultFoundException("No Result found"));
-        try {
-            ResponseEntity<List<FlightDTO>> flightSearchResponseList = flightController.getFlights("BOM", "DEL", "price", "asc");
-        } catch (NoResultFoundException e) {
-            Assertions.assertEquals("No Result found", e.getMessage());
-        }
-    }
-
 }

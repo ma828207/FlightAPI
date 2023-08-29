@@ -1,5 +1,7 @@
 package com.flight.api.controller;
 
+import com.flight.api.exception.NoResultFoundException;
+import com.flight.api.exception.SortInputDataException;
 import com.flight.api.model.FlightDTO;
 import com.flight.api.service.FlightService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +45,7 @@ public class FlightController {
             @RequestParam(value = "destination") @NotEmpty(message = "Destination is required.") String destination,
             @RequestParam(value = "sortBy", defaultValue = "price", required = false) String sortBy,
             @RequestParam(value = "sortType", defaultValue = "asc", required = false) String sortType
-    ) throws Exception {
+    ) throws NoResultFoundException, SortInputDataException {
 
         log.info("Controller Method - getFlights Starts with parameters: {}", source, destination, sortBy, sortType);
         /* This method call fetches flight list based on passed parameters*/
